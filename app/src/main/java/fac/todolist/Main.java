@@ -15,8 +15,10 @@ import android.widget.AdapterView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
+
 import android.widget.ListView;
 import android.widget.EditText;
+
 import org.apache.commons.io.*;
 
 public class Main extends AppCompatActivity {
@@ -31,36 +33,38 @@ public class Main extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Add_task button
-        FloatingActionButton add_task = (FloatingActionButton) findViewById(R.id.add_task);
+        // Load Items
+        lvItems = (ListView) findViewById(R.id.list);
+        items = new ArrayList<String>();
+        readItems();
+        itemsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items);
+        lvItems.setAdapter(itemsAdapter);
+
+
+        setupAddTaskButton();
+        setupCompletedButton();
+
+        //setupAboutButton();
+    }
+
+
+    public void setupAboutButton() {
+        FloatingActionButton add_task = (FloatingActionButton) findViewById(R.id.about);
         add_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
                 String itemText = etNewItem.getText().toString();
+                Snackbar.make(view, getResources().getString(R.string.about), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
-                if (!itemText.isEmpty()) {
-                    itemsAdapter.add(itemText);
-                    Snackbar.make(view, getResources().getString(R.string.task_added), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    etNewItem.setText("");
-                    //writeItems();
-                } else {
-                    Snackbar.make(view, getResources().getString(R.string.task_null), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
             }
         });
 
-        // Load items
-        lvItems = (ListView) findViewById(R.id.list);
-        items = new ArrayList<String>();
-        itemsAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
-        //readItems();
+    }
 
-        // Listener Completed
+    public void setupCompletedButton() {
         lvItems.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -75,10 +79,31 @@ public class Main extends AppCompatActivity {
                 });
     }
 
+    public void setupAddTaskButton() {
+        FloatingActionButton add_task = (FloatingActionButton) findViewById(R.id.add_task);
+        add_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+                String itemText = etNewItem.getText().toString();
+
+                if (!itemText.isEmpty()) {
+                    itemsAdapter.add(itemText);
+                    Snackbar.make(view, getResources().getString(R.string.task_added), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    etNewItem.setText("");
+                    writeItems();
+                } else {
+                    Snackbar.make(view, getResources().getString(R.string.task_null), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -91,13 +116,15 @@ public class Main extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+     /*   if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         switch (item.getItemId()) {
             case R.id.add_task:
                 Log.d("Main", "Add a new task");
+                return true;
+            case R.id.about:
                 return true;
         }
 
