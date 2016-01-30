@@ -45,23 +45,6 @@ public class Main extends AppCompatActivity {
         setupAddTaskButton();
         setupCompletedButton();
 
-        //setupAboutButton();
-    }
-
-
-    public void setupAboutButton() {
-        FloatingActionButton add_task = (FloatingActionButton) findViewById(R.id.about);
-        add_task.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-                String itemText = etNewItem.getText().toString();
-                Snackbar.make(view, getResources().getString(R.string.about), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
-        });
-
     }
 
     public void setupCompletedButton() {
@@ -110,24 +93,12 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-     /*   if (id == R.id.action_settings) {
-            return true;
-        }*/
-
         switch (item.getItemId()) {
-            case R.id.add_task:
-                Log.d("Main", "Add a new task");
-                return true;
-            case R.id.about:
+            case R.id.action_exit:
+                finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

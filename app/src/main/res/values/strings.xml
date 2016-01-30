@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">To Do List</string>
     <string name="action_settings">Settings</string>
-    <string name="task_added">Task added</string>
-    <string name="task_null">No task added</string>
-    <string name="task_completed">Task Completed</string>
-    <string name="about">About</string>
+    <string name="task_added">Task added!</string>
+    <string name="task_null">Please fill the form!</string>
+    <string name="task_completed">Task Completed.</string>
+    <string name="exit">Exit</string>
 
 </resources>
